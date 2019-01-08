@@ -1,0 +1,6 @@
+{
+  "terminal.integrated.env.osx": {
+    "PATH": "/Users/niller/.platformio/penv/bin:/Users/niller/.platformio/penv:/Users/niller/.nvm/versions/node/v10.14.2/bin:/Users/niller/.rbenv/shims:/Users/niller/bin:/usr/local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/local/share/dotnet:/opt/X11/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin:/Users/niller/miniconda3/bin:/usr/local/opt/openssl/bin:/usr/local/opt/openssl@1.1/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/sbin:/usr/local/smlnj/bin:/usr/local/opt/cc0/bin:/Users/GeorgeZhang/bin:/usr/local/git/bin:/Library/TeX/texbin:/Users/GeorgeZhang/anaconda3/bin:/Users/niller/nand2tetris/tools:/Users/GeorgeZhang/15122/cc0/bin:/Users/GeorgeZhang/miniconda3/bin:.:/Users/niller/.rvm/bin",
+    "PLATFORMIO_CALLER": "vscode"
+  }
+}
