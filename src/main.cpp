@@ -37,19 +37,24 @@ void pause()
 	}
 }
 
-int main()
+void start_count()
 {
-
-	// Start screen
 	lcd.Clear(LCD_COLOR_BLUE);
 	lcd.SetBackColor(LCD_COLOR_BLUE);
 	lcd.SetTextColor(LCD_COLOR_WHITE);
 	lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"Let the count begin!", CENTER_MODE);
-
 	wait(1);
 	lcd.Clear(LCD_COLOR_BLUE);
 	lcd.SetBackColor(LCD_COLOR_BLUE);
 	lcd.SetTextColor(LCD_COLOR_WHITE);
+}
+
+int main()
+{
+
+	// Start screen
+	start_count();
+
 
 	b2.rise(&pause);
 	b1.rise(&pause);
