@@ -55,7 +55,6 @@ int main()
 	// Start screen
 	start_count();
 
-
 	b2.rise(&pause);
 	b1.rise(&pause);
 	uint32_t count = 0;
@@ -66,16 +65,15 @@ int main()
 		if (running)
 		{
 			count++;
-			if (count >= 10000)
+			if (count >= 9999)
 			{
 				count = 0;
-				lcd.Clear(LCD_COLOR_BLUE);
 			}
-			sprintf(screen_int, "Count: %lu", count);
+			sprintf(screen_int, "Count: %04lu", count);
 		}
 		if (!paused)
 		{
-			pc.printf("Count: %d\r\n", count);
+			pc.printf("Count: %04d\r\n", count);
 			lcd.DisplayStringAt(0, LINE(1), (uint8_t *)"              ", CENTER_MODE);
 			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)screen_int, CENTER_MODE);
 			led2 = 1;
