@@ -92,3 +92,7 @@ When the counter is paused the LCD is changing background color, and puts `--- P
 I had some issues with clearing the screen to change background color and text only clearing partially. I fixed it by adding a line of spaces.
 
 I also had issues with flickering when clearing. I fixed it by pausing the loop, when pausing the counter. When the counter is running it's only the text updating, and that doesn't flicker.
+
+## Other sensors
+
+I got the temperature and humidity sensor to work, but I couldn't find a use for it so I removed again. I tested it just to see how an analog sensor works, and it seems straigt forward.
