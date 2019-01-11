@@ -37,13 +37,37 @@ void pause()
 	}
 }
 
+void boot()
+{
+	lcd.Clear(LCD_COLOR_BLACK);
+	lcd.SetBackColor(LCD_COLOR_BLACK);
+	lcd.SetTextColor(LCD_COLOR_WHITE);
+	lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"BOOTING", CENTER_MODE);
+	lcd.DisplayStringAt(0, LINE(6), (uint8_t *)"-------", CENTER_MODE);
+	wait(0.3);
+	lcd.DisplayStringAt(0, LINE(6), (uint8_t *)"#------", CENTER_MODE);
+	wait(0.3);
+	lcd.DisplayStringAt(0, LINE(6), (uint8_t *)"##-----", CENTER_MODE);
+	wait(0.3);
+	lcd.DisplayStringAt(0, LINE(6), (uint8_t *)"###----", CENTER_MODE);
+	wait(0.3);
+	lcd.DisplayStringAt(0, LINE(6), (uint8_t *)"####---", CENTER_MODE);
+	wait(0.3);
+	lcd.DisplayStringAt(0, LINE(6), (uint8_t *)"#####--", CENTER_MODE);
+	wait(0.3);
+	lcd.DisplayStringAt(0, LINE(6), (uint8_t *)"######-", CENTER_MODE);
+	wait(0.3);
+	lcd.DisplayStringAt(0, LINE(6), (uint8_t *)"#######", CENTER_MODE);
+	wait(1);
+}
+
 void start_count()
 {
 	lcd.Clear(LCD_COLOR_BLUE);
 	lcd.SetBackColor(LCD_COLOR_BLUE);
 	lcd.SetTextColor(LCD_COLOR_WHITE);
 	lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"Let the count begin!", CENTER_MODE);
-	wait(1);
+	wait(2);
 	lcd.Clear(LCD_COLOR_BLUE);
 	lcd.SetBackColor(LCD_COLOR_BLUE);
 	lcd.SetTextColor(LCD_COLOR_WHITE);
@@ -53,6 +77,7 @@ int main()
 {
 
 	// Start screen
+	boot();
 	start_count();
 
 	b2.rise(&pause);
