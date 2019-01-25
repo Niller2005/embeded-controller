@@ -5,17 +5,18 @@
 
 LCD_DISCO_F746NG lcd;
 
-InterruptIn btn(USER_BUTTON);
-DigitalOut led1(LED1);
-DigitalOut led2(D2);
-AnalogIn ls(A0);
-DHT sensor(A1, SEN51035P);
+InterruptIn btn(USER_BUTTON); // Onboard blue button
+DigitalOut led1(LED1);				// Onboard LED
+DigitalOut led2(D2);					// LED Socket Kit
+AnalogIn ls(A0);							// Light sensor
+AnalogIn ss(A2);							// Loudness sensor
+DHT sensor(A1, SEN51035P);		// Temprature and Humidity sensor
 
 Serial pc(USBTX, USBRX);
 
-Thread counter;
 Thread ths;
 Thread light;
+Thread sound;
 // create an event queue
 EventQueue queue;
 
@@ -92,6 +93,7 @@ void boot()
 
 void dht_thread()
 {
+
 	int err;
 	char temp_int[32];
 	char humi_int[32];
@@ -99,6 +101,8 @@ void dht_thread()
 
 	while (1)
 	{
+		lcd.SetTextColor(LCD_COLOR_WHITE);
+
 		err = sensor.readData();
 		if (err == 0)
 		{
@@ -137,7 +141,7 @@ void light_thread()
 {
 	while (1)
 	{
-
+		lcd.SetTextColor(LCD_COLOR_WHITE);
 		if (ls.read() > 0.3)
 		{
 			lcd.DisplayStringAt(0, LINE(2), (uint8_t *)"Goddag", CENTER_MODE);
@@ -146,6 +150,68 @@ void light_thread()
 		{
 			lcd.DisplayStringAt(0, LINE(2), (uint8_t *)"Godnat", CENTER_MODE);
 		}
+	}
+}
+
+void sound_thread()
+{
+	float loudness;
+	lcd.DisplayStringAt(0, LINE(3), (uint8_t *)"Loudness Level", CENTER_MODE);
+	while (1)
+	{
+		loudness = ss.read();
+
+		if (loudness > 0.6)
+		{
+			lcd.SetTextColor(LCD_COLOR_RED);
+		}
+		else
+		{
+			lcd.SetTextColor(LCD_COLOR_WHITE);
+		}
+
+		if (loudness < 0.1)
+		{
+			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"#---------", CENTER_MODE);
+		}
+		else if (loudness < 0.2)
+		{
+			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"##--------", CENTER_MODE);
+		}
+		else if (loudness < 0.3)
+		{
+			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"###-------", CENTER_MODE);
+		}
+		else if (loudness < 0.4)
+		{
+			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"####------", CENTER_MODE);
+		}
+		else if (loudness < 0.5)
+		{
+			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"#####-----", CENTER_MODE);
+		}
+		else if (loudness < 0.6)
+		{
+			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"######----", CENTER_MODE);
+		}
+		else if (loudness < 0.7)
+		{
+			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"#######---", CENTER_MODE);
+		}
+		else if (loudness < 0.8)
+		{
+			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"########--", CENTER_MODE);
+		}
+		else if (loudness < 0.9)
+		{
+			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"#########-", CENTER_MODE);
+		}
+		else if (loudness <= 1)
+		{
+			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"##########", CENTER_MODE);
+		}
+
+		ThisThread::sleep_for(150);
 	}
 }
 
@@ -167,5 +233,7 @@ int main()
 
 	ths.start(dht_thread);
 	light.start(light_thread);
+	sound.start(sound_thread);
+
 	wait(osWaitForever);
 }
