@@ -27,7 +27,6 @@ char temp = 'C';
 
 void temp_switch()
 {
-	// this now runs in the context of eventThread, instead of in the ISR
 	led2 = !led2;
 	if (!led2)
 	{
@@ -45,7 +44,6 @@ void temp_switch()
 
 void user_input()
 {
-	// char buffer[128];
 	char b[8];
 	char r[8];
 
@@ -156,12 +154,12 @@ void light_thread()
 void sound_thread()
 {
 	float loudness;
-	lcd.DisplayStringAt(0, LINE(3), (uint8_t *)"Loudness Level", CENTER_MODE);
+	lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"Loudness Level", CENTER_MODE);
 	while (1)
 	{
 		loudness = ss.read();
 
-		if (loudness > 0.6)
+		if (loudness > 0.5)
 		{
 			lcd.SetTextColor(LCD_COLOR_RED);
 		}
@@ -172,43 +170,43 @@ void sound_thread()
 
 		if (loudness < 0.1)
 		{
-			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"#---------", CENTER_MODE);
+			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"#---------", CENTER_MODE);
 		}
 		else if (loudness < 0.2)
 		{
-			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"##--------", CENTER_MODE);
+			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"##--------", CENTER_MODE);
 		}
 		else if (loudness < 0.3)
 		{
-			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"###-------", CENTER_MODE);
+			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"###-------", CENTER_MODE);
 		}
 		else if (loudness < 0.4)
 		{
-			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"####------", CENTER_MODE);
+			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"####------", CENTER_MODE);
 		}
 		else if (loudness < 0.5)
 		{
-			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"#####-----", CENTER_MODE);
+			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"#####-----", CENTER_MODE);
 		}
 		else if (loudness < 0.6)
 		{
-			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"######----", CENTER_MODE);
+			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"######----", CENTER_MODE);
 		}
 		else if (loudness < 0.7)
 		{
-			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"#######---", CENTER_MODE);
+			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"#######---", CENTER_MODE);
 		}
 		else if (loudness < 0.8)
 		{
-			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"########--", CENTER_MODE);
+			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"########--", CENTER_MODE);
 		}
 		else if (loudness < 0.9)
 		{
-			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"#########-", CENTER_MODE);
+			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"#########-", CENTER_MODE);
 		}
 		else if (loudness <= 1)
 		{
-			lcd.DisplayStringAt(0, LINE(4), (uint8_t *)"##########", CENTER_MODE);
+			lcd.DisplayStringAt(0, LINE(5), (uint8_t *)"##########", CENTER_MODE);
 		}
 
 		ThisThread::sleep_for(150);
@@ -217,11 +215,9 @@ void sound_thread()
 
 int main()
 {
-	// create a thread that'll run the event queue's dispatch function
 	Thread eventThread;
 	eventThread.start(callback(&queue, &EventQueue::dispatch_forever));
 
-	// wrap calls in queue.event to automatically defer to the queue's thread
 	btn.fall(queue.event(&temp_switch));
 
 	SCB_CleanDCache();
